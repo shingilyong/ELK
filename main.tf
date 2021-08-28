@@ -16,7 +16,7 @@ resource "aws_vpc" "ELK_VPC" {
 resource "aws_subnet" "ELK_public" {
     vpc_id = "${aws_vpc.ELK_VPC.id}"
     cidr_block = "${var.cidr_block["cidr_subnet"]}"
-    availability_zone = "ap-northeast-2a"
+    availability_zone = "${var.az["a"]}"
     tags = {
         Name = "ELK_subnet"
     }
@@ -42,7 +42,7 @@ resource "aws_route_table" "ELK_route" {
     vpc_id = "${aws_vpc.ELK_VPC.id}"
 
     route {
-        cidr_block = "0.0.0.0/0"
+        cidr_block = "${var.cidr_block["cidr_all"]}"
         gateway_id = aws_internet_gateway.ELK_IGW.id
     }
     tags = {
